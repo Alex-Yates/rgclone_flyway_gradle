@@ -1,6 +1,7 @@
-task printHelloWorld(type: Exec) {
-    def command = System.getProperty('os.name').toLowerCase().contains('win') ? 'echo Hello, World!' : 'echo "Hello, World!"'
-    commandLine 'cmd', '/c', command
+task printHelloWorld {
+    doLast {
+        println("Hello, World!")
+    }
 }
 
 // Run the printHelloWorld task
