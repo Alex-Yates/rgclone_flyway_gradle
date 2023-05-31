@@ -21,7 +21,7 @@ jobs:
         BUILD_ID=${{ github.run_id }}
         echo "Container Name: test_${BUILD_ID}_${GITHUB_RUN_ATTEMPT}"
         cd ./gradle
-        ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="test_build_${BUILD_ID}"
+        ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="test_${BUILD_ID}_${GITHUB_RUN_ATTEMPT}"
     - name: View all rgClone images and containers
       run: |
         cd ./gradle
