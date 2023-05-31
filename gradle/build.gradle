@@ -13,5 +13,17 @@ task setupRgCloneCli {
         curl $rgCloneEndpoint/cloning-api/download/cli/linux-amd64 | tar xz
         export RGCLONE_API_ENDPOINT=$rgCloneEndpoint
         rgclone auth -t "$rgCloneToken"
+
+        exec {
+            commandLine "curl $rgCloneEndpoint/cloning-api/download/cli/linux-amd64 | tar xz"
+        }
+        
+        exec {
+            commandLine "export RGCLONE_API_ENDPOINT=$rgCloneEndpoint"
+        }
+        
+        exec {
+            commandLine " rgclone auth -t $rgCloneToken"
+        }
     }
 }
