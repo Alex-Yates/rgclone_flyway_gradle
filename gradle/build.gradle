@@ -32,12 +32,12 @@ task setupRgCloneCli {
 
         exec {
             workingDir '.' // Set the working directory to the current directory
-            commandLine 'rgclone'
+            commandLine './rgclone'
         }
 
         exec {
             workingDir '.' // Set the working directory to the current directory
-            commandLine 'rgclone', 'auth', '-t', rgCloneToken
+            commandLine './rgclone', 'auth', '-t', rgCloneToken
         }
     }
 }
