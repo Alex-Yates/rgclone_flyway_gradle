@@ -18,11 +18,9 @@ jobs:
         ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PrgCloneToken="${{ secrets.RGCLONE_TOKEN }}"
     - name: Create Data-Container (lifetime 5m)
       run: |
-        chmod +x ./gradle/gradlew
         cd ./gradle
         ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
     - name: View all rgClone images and containers
       run: |
-        chmod +x ./gradle/gradlew
         cd ./gradle
         ./gradlew getAll -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
