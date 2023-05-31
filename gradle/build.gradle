@@ -1,5 +1,7 @@
 task helloWorld {
     doLast {
+        def githubSecret = System.getProperty('githubSecret')
+        println "GitHub Secret: $githubSecret"
         println 'Hello, World!'
     }
 }

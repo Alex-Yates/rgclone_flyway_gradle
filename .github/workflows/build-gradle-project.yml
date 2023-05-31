@@ -15,4 +15,4 @@ jobs:
       run: |
         chmod +x ./gradle/gradlew
         cd ./gradle
-        ./gradlew HelloWorld
+        ./gradlew HelloWorld -PgithubSecret=${{ secrets.TEST_SECRET }}
