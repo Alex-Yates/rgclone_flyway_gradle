@@ -19,6 +19,10 @@ task setupRgCloneCli {
             commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
         }
 
+        exec {
+            commandLine 'chmod', '+x', 'rgclone'
+        }
+
         println 'Current Directory Contents:'
         exec {
             commandLine 'ls', '-al'
