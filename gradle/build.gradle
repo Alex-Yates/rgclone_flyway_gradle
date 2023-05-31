@@ -19,14 +19,8 @@ task setupRgCloneCli {
             commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
         }
 
-        // Set the RGCLONE_API_ENDPOINT environment variable
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
-        }
-
-        println "RGCLONE_API_ENDPOINT: $rgCloneEndpoint"
-
-        exec {
             workingDir '.' // Set the working directory to the current directory
             commandLine './rgclone', 'auth', '-t', rgCloneToken
         }
