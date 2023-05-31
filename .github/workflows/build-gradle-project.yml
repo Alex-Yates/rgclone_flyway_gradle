@@ -13,7 +13,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Print GitHub Secret
       run: |
-        echo "GitHub Secret: ${{ secrets.MySecret }}"
+        echo "GitHub Secret: ${{ secrets.TEST_SECRET }}"
     - name: Run build with Gradle Wrapper
       run: |
         chmod +x ./gradle/gradlew
