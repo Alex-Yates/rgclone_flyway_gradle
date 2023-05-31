@@ -20,9 +20,9 @@ jobs:
       run: |
         chmod +x ./gradle/gradlew
         cd ./gradle
-        ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
+        ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
     - name: View all rgClone images and containers
       run: |
         chmod +x ./gradle/gradlew
         cd ./gradle
-        ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
+        ./gradlew getAll -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
