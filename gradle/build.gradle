@@ -10,14 +10,19 @@ task setupRgCloneCli {
     doLast {
         def rgCloneEndpoint = project.property('rgCloneEndpoint')
         def rgCloneToken = project.property('rgCloneToken')
+
         exec {
-            commandLine "curl $rgCloneEndpoint/cloning-api/download/cli/linux-amd64 | tar xz"
-        } 
-        exec {
-            commandLine "export RGCLONE_API_ENDPOINT=$rgCloneEndpoint"
+            commandLine 'curl', "$rgCloneEndpoint/cloning-api/download/cli/linux-amd64"
         }
+
         exec {
-            commandLine " rgclone auth -t $rgCloneToken"
+            commandLine 'tar', 'xz'
+        }
+
+        project.ext.RGCLONE_API_ENDPOINT = rgCloneEndpoint
+
+        exec {
+            commandLine 'rgclone', 'auth', '-t', rgCloneToken
         }
     }
 }
