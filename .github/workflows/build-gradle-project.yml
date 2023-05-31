@@ -18,7 +18,7 @@ jobs:
         ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PrgCloneToken="${{ secrets.RGCLONE_TOKEN }}"
     - name: Create Data-Container (lifetime 5m)
       run: |
-        CONTAINERNAME="test_${{ github.run_id }}_${{ github.run.attempt}}"
+        CONTAINERNAME="test_${{ github.run_id }}_${{ github.run.attempt }}"
         echo "Container Name: ${CONTAINERNAME}"
         cd ./gradle
         ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
