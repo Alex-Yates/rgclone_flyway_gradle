@@ -1,33 +1,55 @@
-task helloWorld {
-    doLast {
-        def githubSecret = project.property('githubSecret')
-        println "GitHub Secret: $githubSecret"
-        println 'Hello, World!'
-    }
-}
-
 task setupRgCloneCli {
     doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
         def rgCloneEndpoint = project.property('rgCloneEndpoint')
         def rgCloneToken = project.property('rgCloneToken')
 
+        // Downloading rgClone
         exec {
             commandLine 'curl', '-o', 'rgclone.tar.gz', "$rgCloneEndpoint/cloning-api/download/cli/linux-amd64"
         }
 
+        // Extracting rgClone
         exec {
             commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
         }
 
+        // Using rgClone to authenticate against the Redgate Clone server
         exec {
+            // I've so far failed to set RGCLONE_API_ENDPOINT globally, but this works within a single exec block
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
-            workingDir '.' // Set the working directory to the current directory
+            
+            // I'm sure there's a better way to get the path to rgclone, but this works
+            workingDir '.'
             commandLine './rgclone', 'auth', '-t', rgCloneToken
         }
+
+
+    }
+}
+
+task createDataContainer {
+    doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
 
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
+            commandLine './rgclone', 'create', 'data-container', '--name', 'test', '--lifetime', '5m', '-i', '83'
+        }
+    }
+}
+
+task getAll {
+    doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
+
+        // Using rgClone to find out what images and containers we have access to.
+        exec {
+            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
+            workingDir '.' 
             commandLine './rgclone', 'get', 'all'
         }
     }
