@@ -19,3 +19,4 @@ jobs:
         chmod +x ./gradle/gradlew
         cd ./gradle
         ./gradlew HelloWorld -PgithubSecret=${{ secrets.TEST_SECRET }}
+        ./gradlew HelloWorld -PgithubSecret="NotTheRealSecret"
