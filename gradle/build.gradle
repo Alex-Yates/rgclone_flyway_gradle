@@ -21,7 +21,7 @@ task setupRgCloneCli {
 
         // Set the RGCLONE_API_ENDPOINT environment variable
         exec {
-            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
+            commandLine 'env', 'RGCLONE_API_ENDPOINT=' + rgCloneEndpoint
         }
 
         exec {
