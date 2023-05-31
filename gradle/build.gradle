@@ -19,6 +19,11 @@ task setupRgCloneCli {
             commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
         }
 
+        println 'Current Directory Contents:'
+        exec {
+            commandLine 'ls', '-al'
+        }
+
         project.ext.RGCLONE_API_ENDPOINT = rgCloneEndpoint
 
         exec {
