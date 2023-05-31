@@ -19,21 +19,11 @@ task setupRgCloneCli {
             commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
         }
 
-        exec {
-            commandLine 'chmod', '+x', 'rgclone'
-        }
-
-        println 'Current Directory Contents:'
-        exec {
-            commandLine 'ls', '-al'
-        }
+        //exec {
+        //    commandLine 'chmod', '+x', 'rgclone'
+        //}
 
         project.ext.RGCLONE_API_ENDPOINT = rgCloneEndpoint
-
-        exec {
-            workingDir '.' // Set the working directory to the current directory
-            commandLine './rgclone'
-        }
 
         exec {
             workingDir '.' // Set the working directory to the current directory
