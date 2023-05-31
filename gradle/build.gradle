@@ -26,6 +26,7 @@ task setupRgCloneCli {
         }
 
         exec {
+            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
             commandLine './rgclone', 'get', 'all'
         }
