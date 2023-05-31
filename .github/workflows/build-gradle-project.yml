@@ -13,6 +13,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Setup rgClone
       run: |
+        chmod +x ./gradle/gradlew
         cd ./gradle
         ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PrgCloneToken="${{ secrets.RGCLONE_TOKEN }}"
     - name: Create Data-Container (lifetime 5m)
