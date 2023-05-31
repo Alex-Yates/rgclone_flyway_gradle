@@ -1,0 +1,6 @@
+task runIpConfig(type: Exec) {
+    commandLine 'cmd', '/c', 'ipconfig'
+}
+
+// Run the ipconfig task
+defaultTasks 'runIpConfig'
