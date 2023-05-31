@@ -19,7 +19,6 @@ jobs:
     - name: Create Data-Container (lifetime 5m)
       run: |
         CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"
-        echo "Container Name: ${CONTAINERNAME}"
         cd ./gradle
         ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
     - name: View all rgClone images and containers
