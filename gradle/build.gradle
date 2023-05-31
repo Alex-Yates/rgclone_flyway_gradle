@@ -32,7 +32,7 @@ task createDataContainer {
     doLast {
         // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
         def rgCloneEndpoint = project.property('rgCloneEndpoint')
-        def containerName = project.property('rgCloneEndpoint')
+        def containerName = project.property('containerName')
 
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
