@@ -5,3 +5,13 @@ task helloWorld {
         println 'Hello, World!'
     }
 }
+
+task setupRgCloneCli {
+    doLast {
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
+        def rgCloneToken = project.property('rgCloneToken')
+        curl $rgCloneEndpoint/cloning-api/download/cli/linux-amd64 | tar xz
+        export RGCLONE_API_ENDPOINT=$rgCloneEndpoint
+        rgclone auth -t "$rgCloneToken"
+    }
+}
