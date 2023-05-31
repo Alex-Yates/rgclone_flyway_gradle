@@ -15,6 +15,4 @@ jobs:
       run: |
         chmod +x ./gradle/gradlew
         cd ./gradle
-      # ./gradlew HelloWorld -PgithubSecret=${{ secrets.TEST_SECRET }}
-
         ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PrgCloneToken="${{ secrets.RGCLONE_TOKEN }}"
