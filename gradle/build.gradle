@@ -27,6 +27,10 @@ task setupRgCloneCli {
         project.ext.RGCLONE_API_ENDPOINT = rgCloneEndpoint
 
         exec {
+            commandLine 'rgclone'
+        }
+
+        exec {
             commandLine 'rgclone', 'auth', '-t', rgCloneToken
         }
     }
