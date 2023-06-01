@@ -35,6 +35,8 @@ This action calls gradle to perform the tasks above. It provides a couple of par
 - RGCLONE_ENDPOINT 
 - RGCLONE_TOKEN 
 
+The values for these parameters are saved as GitHub secrets.
+
 ## How to fork and run this yourself
 
 Install your own Redgate Clone instance and create an appropriate data-image:
