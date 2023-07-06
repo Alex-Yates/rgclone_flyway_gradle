@@ -23,8 +23,6 @@ task setupRgCloneCli {
             workingDir '.'
             commandLine './rgclone', 'auth', '-t', rgCloneToken
         }
-
-
     }
 }
 
@@ -38,6 +36,7 @@ task createDataContainer {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
             commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '83'
+            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'yaml'
         }
     }
 }
