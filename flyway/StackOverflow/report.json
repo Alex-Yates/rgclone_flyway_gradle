@@ -1,0 +1,30 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": "1",
+      "targetSchemaVersion": "002.20230706123338",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "002.20230706123338",
+          "description": "Adding a test table",
+          "type": "SQL",
+          "filepath": "C:\\git\\rgclone_flyway_gradle\\flyway\\StackOverflow\\migrations\\V002_20230706123338__Adding a test table.sql",
+          "executionTime": 62
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "StackOverflow2010",
+      "warnings": [
+        "outOfOrder mode is active. Migration of schema [dbo] may not be reproducible."
+      ],
+      "timestamp": "2023-07-06T13:34:50.819999100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}
