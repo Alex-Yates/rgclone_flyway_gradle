@@ -50,7 +50,8 @@ task getContainer {
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' 
-            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'yaml'
+            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'json', '|', 'jq', '.jdbcConnectionString'
         }
     }
 }
+
