@@ -36,21 +36,21 @@ task createDataContainer {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
             commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '83'
-            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'yaml'
         }
     }
 }
 
-task getAll {
+task getContainer {
     doLast {
         // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
         def rgCloneEndpoint = project.property('rgCloneEndpoint')
+        def containerName = project.property('containerName')
 
         // Using rgClone to find out what images and containers we have access to.
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' 
-            commandLine './rgclone', 'get', 'all'
+            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'yaml'
         }
     }
 }

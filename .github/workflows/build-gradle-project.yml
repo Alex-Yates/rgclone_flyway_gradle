@@ -23,5 +23,6 @@ jobs:
         ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
     - name: View all rgClone images and containers
       run: |
+        CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"
         cd ./gradle
-        ./gradlew getAll -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}"
+        ./gradlew getContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
