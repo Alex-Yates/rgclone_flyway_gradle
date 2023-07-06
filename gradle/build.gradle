@@ -49,8 +49,8 @@ task getContainer {
         // Using rgClone to find out what images and containers we have access to.
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
-            workingDir '.' 
-            commandLine './rgclone', 'get', 'data-container', containerName, '-o', 'json' , '|', 'jq', '.jdbcConnectionString'
+            workingDir '.'
+            commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq .jdbcConnectionString"
         }
     }
 }
