@@ -90,14 +90,13 @@ task startCloneAndMigrate {
     dependsOn setupRgCloneCli
     dependsOn createDataContainer
     dependsOn getContainer
+    dependsOn build
 
     doLast {
         def flywayLicenseKey = project.property('flywayLicenseKey')
-        javaexec {
-            args "--spring.flyway.licenseKey=${flywayLicenseKey}"
+        exec {
             environment 'CLONE_URL', getContainer.jdbcUrl
-            classpath = sourceSets.main.runtimeClasspath
-            mainClass = 'com.redgate.Application'
+            commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), 'com.redgate.Application', "--spring.flyway.licenseKey=${flywayLicenseKey}"
         }
     }
 }
