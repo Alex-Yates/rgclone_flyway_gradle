@@ -77,7 +77,7 @@ task getContainer {
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.'
-            commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq .jdbcConnectionString"
+            commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq -r .jdbcConnectionString"
             standardOutput = stdout
         }
         ext.jdbcUrl = stdout.toString().trim()
