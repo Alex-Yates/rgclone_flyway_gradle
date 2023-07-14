@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Flyway Spring CITI Example
+  datasource:
+    url: jdbc:oracle:replace
+  flyway:
+    enabled: true
+    locations: filesystem:src/main/resources/db/migration
+    baselineOnMigrate: true
+    create-schemas: true
+    schemas: SHOP
