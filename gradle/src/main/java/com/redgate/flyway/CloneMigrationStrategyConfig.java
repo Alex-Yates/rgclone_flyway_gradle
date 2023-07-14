@@ -28,8 +28,8 @@ public class CloneMigrationStrategyConfig {
     public FlywayMigrationStrategy flywayMigrationStrategy() {
         return flyway -> {
             if(runOnClone(flyway)){
-                flyway.migrate();
-                flyway.info();
+//                flyway.migrate();
+//                flyway.info();
             } else {
                 throw new RuntimeException("Failed to run migrations on clone");
             }
@@ -39,6 +39,7 @@ public class CloneMigrationStrategyConfig {
     public boolean runOnClone(Flyway flyway) {
         String cloneUrl = System.getenv("CLONE_URL");
         Flyway cloneFlyway = new FluentConfiguration().configuration(flyway.getConfiguration())
+                .licenseKey(System.getenv("FLYWAY_LICENSE"))
                 .dataSource(cloneUrl, null, null)
                 .load();
         MigrateResult migrateResult = migrate(cloneFlyway);

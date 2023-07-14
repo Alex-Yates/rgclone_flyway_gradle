@@ -28,3 +28,7 @@ jobs:
         CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"
         cd ./gradle
         ./gradlew getContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
+    - name: Run Flyway
+      run: |
+        cd ./gradle
+        ./gradlew flywayApp
