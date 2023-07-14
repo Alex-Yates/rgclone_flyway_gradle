@@ -63,7 +63,7 @@ task createDataContainer {
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
-            commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '83'
+            commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '111'
         }
     }
 }
@@ -86,10 +86,8 @@ task getContainer {
     }
 }
 task flywayApp (type: JavaExec) {
-    doLast {
-        environment 'CLONE_URL', jdbcUrl
+     environment 'CLONE_URL', jdbcUrl
         classpath = sourceSets.main.runtimeClasspath
         mainClass = 'com.redgate.Application'
-    }
 }
 
