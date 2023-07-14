@@ -20,7 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.flywaydb.enterprise:flyway-core:9.16.2'
-    implementation 'com.microsoft.sqlserver:mssql-jdbc'
+    implementation 'com.oracle.database.jdbc:ojdbc8'
 }
 
 def jdbcUrl = null
