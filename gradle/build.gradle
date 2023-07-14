@@ -87,7 +87,7 @@ task getContainer {
 }
 task flywayApp (type: JavaExec) {
      environment 'CLONE_URL', jdbcUrl
-        classpath = sourceSets.main.runtimeClasspath
-        mainClass = 'com.redgate.Application'
+     classpath = sourceSets.main.runtimeClasspath
+     mainClass = 'com.redgate.Application'
 }
 

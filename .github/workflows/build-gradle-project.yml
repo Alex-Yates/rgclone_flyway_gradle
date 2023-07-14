@@ -36,6 +36,4 @@ jobs:
     - name: Run Flyway
       run: |
         cd ./gradle
-        ./gradlew flywayApp
-      env:
-        FLYWAY_LICENSE: ${{ secrets.FLYWAY_LICENCE}}
+        ./gradlew flywayApp --args=--spring.flyway.licenseKey=${{ secrets.FLYWAY_LICENCE}}

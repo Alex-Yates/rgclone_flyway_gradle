@@ -39,7 +39,6 @@ public class CloneMigrationStrategyConfig {
     public boolean runOnClone(Flyway flyway) {
         String cloneUrl = System.getenv("CLONE_URL");
         Flyway cloneFlyway = new FluentConfiguration().configuration(flyway.getConfiguration())
-                .licenseKey(System.getenv("FLYWAY_LICENSE"))
                 .dataSource(cloneUrl, null, null)
                 .load();
         MigrateResult migrateResult = migrate(cloneFlyway);
