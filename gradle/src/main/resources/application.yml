@@ -6,3 +6,6 @@ spring:
   flyway:
     enabled: true
     locations: filesystem:src/main/resources/db/migration
+    baselineOnMigrate: true
+    create-schemas: true
+    schemas: SHOP
