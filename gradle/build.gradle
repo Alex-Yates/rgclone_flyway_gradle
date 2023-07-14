@@ -24,58 +24,64 @@ dependencies {
 }
 
 task setupRgCloneCli {
-    // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
-    def rgCloneEndpoint = project.property('rgCloneEndpoint')
-    def rgCloneToken = project.property('rgCloneToken')
+    doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
+        def rgCloneToken = project.property('rgCloneToken')
 
-    // Downloading rgClone
-    exec {
-        commandLine 'curl', '-o', 'rgclone.tar.gz', "$rgCloneEndpoint/cloning-api/download/cli/linux-amd64"
-    }
+        // Downloading rgClone
+        exec {
+            commandLine 'curl', '-o', 'rgclone.tar.gz', "$rgCloneEndpoint/cloning-api/download/cli/linux-amd64"
+        }
 
-    // Extracting rgClone
-    exec {
-        commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
-    }
+        // Extracting rgClone
+        exec {
+            commandLine 'tar', 'xz', '-f', 'rgclone.tar.gz'
+        }
 
-    // Using rgClone to authenticate against the Redgate Clone server
-    exec {
-        // I've so far failed to set RGCLONE_API_ENDPOINT globally, but this works within a single exec block
-        environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
+        // Using rgClone to authenticate against the Redgate Clone server
+        exec {
+            // I've so far failed to set RGCLONE_API_ENDPOINT globally, but this works within a single exec block
+            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
 
-        // I'm sure there's a better way to get the path to rgclone, but this works
-        workingDir '.'
-        commandLine './rgclone', 'auth', '-t', rgCloneToken
+            // I'm sure there's a better way to get the path to rgclone, but this works
+            workingDir '.'
+            commandLine './rgclone', 'auth', '-t', rgCloneToken
+        }
     }
 }
 
 task createDataContainer {
-    // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
-    def rgCloneEndpoint = project.property('rgCloneEndpoint')
-    def containerName = project.property('containerName')
+    doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
+        def containerName = project.property('containerName')
 
 
-    exec {
-        environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
-        workingDir '.' // Set the working directory to the current directory
-        commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '111'
+        exec {
+            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
+            workingDir '.' // Set the working directory to the current directory
+            commandLine './rgclone', 'create', 'data-container', '--name', containerName, '--lifetime', '5m', '-i', '111'
+        }
     }
 }
 
 task getContainer {
-    // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
-    def rgCloneEndpoint = project.property('rgCloneEndpoint')
-    def containerName = project.property('containerName')
+    doLast {
+        // Declaring a couple of parameters, so that we can use GitHub secrets for the rgclone endpoint and token.
+        def rgCloneEndpoint = project.property('rgCloneEndpoint')
+        def containerName = project.property('containerName')
 
-    // Using rgClone to find out what images and containers we have access to.
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
-        workingDir '.'
-        commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq .jdbcConnectionString"
-        standardOutput = stdout
+        // Using rgClone to find out what images and containers we have access to.
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
+            workingDir '.'
+            commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq .jdbcConnectionString"
+            standardOutput = stdout
+        }
+        ext.jdbcUrl = stdout.toString().trim()
     }
-    ext.jdbcUrl = stdout.toString().trim()
 }
 
 task startCloneAndMigrate {
@@ -85,11 +91,13 @@ task startCloneAndMigrate {
     dependsOn createDataContainer
     dependsOn getContainer
 
-    def flywayLicenseKey = project.property('flywayLicenseKey')
-    javaexec {
-        environment 'CLONE_URL', getContainer.jdbcUrl
-        classpath = sourceSets.main.runtimeClasspath
-        mainClass = 'com.redgate.Application'
-        args "--spring.flyway.licenseKey=${flywayLicenseKey}"
+    doLast {
+        def flywayLicenseKey = project.property('flywayLicenseKey')
+        javaexec {
+            args "--spring.flyway.licenseKey=${flywayLicenseKey}"
+            environment 'CLONE_URL', getContainer.jdbcUrl
+            classpath = sourceSets.main.runtimeClasspath
+            mainClass = 'com.redgate.Application'
+        }
     }
 }
