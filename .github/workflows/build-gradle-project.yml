@@ -18,25 +18,6 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Install jq
       run: sudo apt-get update && sudo apt-get install -y jq
-    # - name: Setup rgClone
-    #   run: |
-    #     chmod +x ./gradle/gradlew
-    #     cd ./gradle
-    #     ./gradlew setupRgCloneCli -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PrgCloneToken="${{ secrets.RGCLONE_TOKEN }}"
-    # - name: Create Data-Container (lifetime 5m)
-    #   run: |
-    #     CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"
-    #     cd ./gradle
-    #     ./gradlew createDataContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
-    # - name: View all rgClone images and containers
-    #   run: |
-    #     CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"
-    #     cd ./gradle
-    #     ./gradlew getContainer -PrgCloneEndpoint="${{ secrets.RGCLONE_ENDPOINT }}" -PcontainerName="${CONTAINERNAME}"
-    # - name: Run Flyway
-    #   run: |
-    #     cd ./gradle
-    #     ./gradlew flywayApp --args=--spring.flyway.licenseKey=${{ secrets.FLYWAY_LICENCE}}
     - name: Run RGClone with Flyway in Spring Boot
       run: |
         CONTAINERNAME="test_${{ github.run_id }}_${{ github.run_attempt }}"

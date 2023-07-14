@@ -84,7 +84,7 @@ task getContainer {
     }
 }
 
-task startCloneAndMigrate {
+task startCloneAndFlywayMigrate {
     createDataContainer.mustRunAfter setupRgCloneCli
     getContainer.mustRunAfter createDataContainer
     dependsOn setupRgCloneCli
