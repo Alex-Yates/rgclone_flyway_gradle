@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
     id 'org.springframework.boot' version '3.1.1'
     id 'io.spring.dependency-management' version '1.1.0'
 }
@@ -21,12 +20,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.flywaydb.enterprise:flyway-core:9.16.2'
-    implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc'
 }
 
-application {
-    mainClass = 'com.redgate.Application'
-}
+def jdbcUrl = null
 
 task setupRgCloneCli {
     doLast {
@@ -62,6 +59,7 @@ task createDataContainer {
         def rgCloneEndpoint = project.property('rgCloneEndpoint')
         def containerName = project.property('containerName')
 
+
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.' // Set the working directory to the current directory
@@ -77,11 +75,19 @@ task getContainer {
         def containerName = project.property('containerName')
 
         // Using rgClone to find out what images and containers we have access to.
+        def stdout = new ByteArrayOutputStream()
         exec {
             environment 'RGCLONE_API_ENDPOINT', rgCloneEndpoint
             workingDir '.'
             commandLine 'sh', '-c', "./rgclone get data-container ${containerName} -o json | jq .jdbcConnectionString"
+            standardOutput = stdout
         }
+        jdbcUrl = stdout.toString().trim()
     }
+}
+task flywayApp (type: JavaExec) {
+    environment 'CLONE_URL', jdbcUrl
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.redgate.Application'
 }
 

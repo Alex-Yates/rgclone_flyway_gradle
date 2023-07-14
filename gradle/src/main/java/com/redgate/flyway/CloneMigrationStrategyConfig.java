@@ -38,10 +38,8 @@ public class CloneMigrationStrategyConfig {
 
     public boolean runOnClone(Flyway flyway) {
         String cloneUrl = System.getenv("CLONE_URL");
-        String cloneUser = System.getenv("CLONE_USER");
-        String clonePassword = System.getenv("CLONE_PASSWORD");
         Flyway cloneFlyway = new FluentConfiguration().configuration(flyway.getConfiguration())
-                .dataSource(cloneUrl, cloneUser, clonePassword)
+                .dataSource(cloneUrl, null, null)
                 .load();
         MigrateResult migrateResult = migrate(cloneFlyway);
         if (!migrateResult.success) {
